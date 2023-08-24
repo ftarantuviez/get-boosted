@@ -1,95 +1,98 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+
+import WeatherCard from "@/components/WeatherCard/WeatherCard";
+import styles from "./page.module.css";
+import { useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  TextField,
+} from "@mui/material";
+import axios from "axios";
+import { API_KEY, BASE_URL } from "@/constants/api";
+import { ICityForecast } from "@/types/cityForecast";
+import { IForecastResponseApi } from "@/types/apiForecast";
+import { getCityForecastFormatted } from "@/utils";
 
 export default function Home() {
+  const [cityForecast, setCityForecast] = useState<ICityForecast>(
+    {} as ICityForecast
+  );
+  const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState({
+    open: false,
+    message: "",
+  });
+
+  const onQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSnackbarOpen = () => {
+    setError({ ...error, open: false });
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const { data } = await axios.get<IForecastResponseApi>(
+        `${BASE_URL}?key=${API_KEY}&q=${query}&days=5`
+      );
+      setLoading(false);
+      const formattedData = getCityForecastFormatted(data);
+      setCityForecast(formattedData);
+    } catch (error) {
+      setLoading(false);
+      setError({
+        message: "There was an error fetching your city",
+        open: true,
+      });
+      setCityForecast({} as ICityForecast);
+      console.log(error);
+    }
+  };
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <Box bgcolor={"white"} p={2} alignItems={"center"} sx={{ mb: 4 }}>
+        <form onSubmit={onSubmit} className={styles.form}>
+          <TextField
+            label="Find your city!"
+            value={query}
+            onChange={onQueryChange}
+            size="medium"
+            required
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            disabled={loading}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+            {loading ? <CircularProgress size={25} color="info" /> : "Search"}
+          </Button>
+        </form>
+      </Box>
+      <WeatherCard cityForecast={cityForecast} />
+      <Snackbar
+        open={error.open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarOpen}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleSnackbarOpen}
+          severity="error"
+          sx={{ width: "100%" }}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+          {error.message}
+        </Alert>
+      </Snackbar>
     </main>
-  )
+  );
 }

@@ -3,15 +3,7 @@
 import WeatherCard from "@/components/WeatherCard/WeatherCard";
 import styles from "./page.module.css";
 import { useState } from "react";
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  Snackbar,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Snackbar, Typography } from "@mui/material";
 import axios from "axios";
 import { API_KEY, BASE_URL } from "@/constants/api";
 import { ICityForecast } from "@/types/cityForecast";

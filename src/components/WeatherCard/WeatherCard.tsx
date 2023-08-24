@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { ICityForecast } from "@/types/cityForecast";
-import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
+import { Box, CardContent, Divider, Typography } from "@mui/material";
 import React from "react";
 import { EmptyState } from "../EmptyState/EmptyState";
+import { StyledCard, StyledPaper } from "./WeatherCard.styles";
 
 type Props = {
   cityForecast: ICityForecast;
@@ -14,35 +15,29 @@ const WeatherCard = (props: Props) => {
   } = props;
 
   return (
-    <Card>
+    <StyledCard>
       <CardContent>
         {location?.name ? (
           <>
             <Box display="flex" flexDirection={"column"} alignItems={"center"}>
               <img src={current.condition.icon} alt="" />
-              <Typography variant="h5">
-                {location.name}, {location.country}
-              </Typography>
               <Typography variant="h3" color="#1976d2">
                 {current.tempCelsius}°
+              </Typography>
+              <Typography variant="h5">
+                {location.name}, {location.country}
               </Typography>
               <Typography variant="body1">{current.condition.text}</Typography>
               <Typography variant="body1">H: {current.humidity}°</Typography>
             </Box>
             <Divider sx={{ m: 3 }} />
-            <Box display="flex">
+            <Box
+              display="flex"
+              justifyContent={"space-evenly"}
+              overflow="scroll"
+            >
               {forecastDay.map((forecast) => (
-                <Box
-                  key={forecast.date}
-                  border="1px solid #e2e2e2"
-                  borderRadius={"8px"}
-                  display="flex"
-                  flexDirection={"column"}
-                  alignItems={"center"}
-                  minWidth={"130px"}
-                  mr={2}
-                  p={2}
-                >
+                <StyledPaper key={forecast.date}>
                   <img src={forecast.condition.icon} alt="" />
                   <Typography variant="h6" color="#1976d2">
                     {forecast.avgTempCelsius}°
@@ -63,7 +58,7 @@ const WeatherCard = (props: Props) => {
                     0{new Date(forecast.date).getMonth() + 1}/
                     {new Date(forecast.date).getUTCDate()}
                   </Typography>
-                </Box>
+                </StyledPaper>
               ))}
             </Box>
           </>
@@ -74,7 +69,7 @@ const WeatherCard = (props: Props) => {
           </Box>
         )}
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 };
 

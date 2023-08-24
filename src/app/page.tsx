@@ -17,6 +17,7 @@ import { API_KEY, BASE_URL } from "@/constants/api";
 import { ICityForecast } from "@/types/cityForecast";
 import { IForecastResponseApi } from "@/types/apiForecast";
 import { getCityForecastFormatted } from "@/utils";
+import CityForm from "@/components/CityForm/CityForm";
 
 export default function Home() {
   const [cityForecast, setCityForecast] = useState<ICityForecast>(
@@ -62,23 +63,12 @@ export default function Home() {
     <main className={styles.main}>
       <Box bgcolor={"white"} p={2} alignItems={"center"} sx={{ mb: 4 }}>
         <Typography variant="h5">Weather App</Typography>
-        <form onSubmit={onSubmit} className={styles.form}>
-          <TextField
-            label="Find your city!"
-            value={query}
-            onChange={onQueryChange}
-            size="medium"
-            required
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={loading}
-          >
-            {loading ? <CircularProgress size={25} color="info" /> : "Search"}
-          </Button>
-        </form>
+        <CityForm
+          onSubmit={onSubmit}
+          onQueryChange={onQueryChange}
+          loading={loading}
+          query={query}
+        />
       </Box>
       <WeatherCard cityForecast={cityForecast} />
       <Snackbar

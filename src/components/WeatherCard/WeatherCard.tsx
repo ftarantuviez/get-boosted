@@ -39,7 +39,7 @@ const WeatherCard = (props: Props) => {
                   display="flex"
                   flexDirection={"column"}
                   alignItems={"center"}
-                  width={"120px"}
+                  minWidth={"130px"}
                   mr={2}
                   p={2}
                 >
@@ -52,6 +52,12 @@ const WeatherCard = (props: Props) => {
                   </Typography>
                   <Typography variant="body1">
                     H: {forecast.avgHumidity}°
+                  </Typography>
+                  <Typography variant="body1">
+                    Min: {forecast.minTempCelsius}°
+                  </Typography>
+                  <Typography variant="body1">
+                    Max: {forecast.maxTempCelsius}°
                   </Typography>
                   <Typography sx={{ mt: 4 }} color="gray">
                     0{new Date(forecast.date).getMonth() + 1}/

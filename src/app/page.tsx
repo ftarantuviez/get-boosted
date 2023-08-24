@@ -10,6 +10,7 @@ import {
   CircularProgress,
   Snackbar,
   TextField,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { API_KEY, BASE_URL } from "@/constants/api";
@@ -60,6 +61,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <Box bgcolor={"white"} p={2} alignItems={"center"} sx={{ mb: 4 }}>
+        <Typography variant="h5">Weather App</Typography>
         <form onSubmit={onSubmit} className={styles.form}>
           <TextField
             label="Find your city!"

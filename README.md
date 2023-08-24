@@ -1,34 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## GET BOOSTED - WEATHER
 
-## Getting Started
+### Descritption ✍️
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Introducing "Weather App Boosted": The app to get the forecast in any part of the world.! 😎
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Technical specifications 👨‍💻
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### Stack 📝
 
-## Learn More
+- **Typescript** (v5.1.6)
+- **React** (v18.2.0)
+- **NextJS** (v13.4.19)
+- **Material UI** (v5.14.6)
+- **Eslint** (v8.47.0)
 
-To learn more about Next.js, take a look at the following resources:
+#### Folder Structure 🗂
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **components**: Here are the elements that can be used in many parts of the code.
+- **constants**: Contains files with data is not gonna change and its used many times.
+- **hooks**: The custom hooks that are gonna be used.
+- **app**: NextJS routes containing the screens that are gonna be rendered.
+- **public**: Public files such us images, favicon and more.
+- **styles**: Global styles and theme configuration.
+- **tests**: To make sure our app is running as it supposed.
+- **types**: Data types used for Typescript purposes.
+- **utils**: Useful functions that could be reused
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Get it running locally 💻
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. `git clone git@github.com:ftarantuviez/get-boosted.git`
+2. `npm install` or `yarn`
+3. `npm run dev` or `yarn dev`
